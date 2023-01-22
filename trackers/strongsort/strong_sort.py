@@ -145,7 +145,12 @@ class StrongSORT(object):
         # Add rectangle to image (PIL-only)
         for i, p in enumerate(q):
             thickness = int(np.sqrt(float (i + 1)) * 1.5)
-            if p[0] == 'observationupdate': 
+            if p[0] == 'observationupdate':
+                start = q[i+1]
+                diffx = p[1][0] - start[1][0]
+                diffy = p[1][1] - start[1][1]
+                end = [p[1][0] + diffx, p[1][1] + diffy]
+                cv2.line(im0, start[1], end, color=color, thickness=2)
                 cv2.circle(im0, p[1], 2, color=color, thickness=thickness)
             else:
                 cv2.circle(im0, p[1], 2, color=(255,255,255), thickness=thickness)
